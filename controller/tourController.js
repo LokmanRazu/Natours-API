@@ -1,6 +1,8 @@
 const { findByIdAndRemove } = require('../model/tourMoel')
 const Tour = require('../model/tourMoel')
 
+
+// USING CLASS TO EASY THE WORK
 class APIFeatures{
     constructor(query, queryString){
         this.query = query

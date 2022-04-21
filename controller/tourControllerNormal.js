@@ -1,4 +1,3 @@
-const { findByIdAndRemove } = require('../model/tourMoel')
 const Tour = require('../model/tourMoel')
 
 exports.getTourController =async (req,res,next)=>{
@@ -68,62 +67,5 @@ exports.getTourController =async (req,res,next)=>{
     
 }
 
-exports.tourDataController =async (req,res,next)=>{
-    const { name,ceo,owner,netWorth,since,headquarter } = req.body
-    try{
-        const testTour = new Tour({
-         name,
-         ceo,
-         owner,
-         netWorth,
-         since,
-         headquarter
-        })
-        const saveTour = await testTour.save().then(doc=>{console.log(doc)})
-           return res.status(200).json({
-            message:'Successfully Data save',
-            data:{
-                saveTour:saveTour
-            }
-        })
-    }catch(e){
-        console.log(`I am from tourController:- ${e}`)
-            next()
-    }
-
-}
-
-
-exports.patchController = async (req,res,next)=>{
-    try{ 
-        const updatedData = await Tour.findByIdAndUpdate(req.params.id,req.body,{new:true})
-        console.log(updatedData)
-        res.status(200).json({
-            message:"I am from patchController",
-            data:{
-                updatedData:updatedData
-            }
-        })
-    }catch(e){
-        console.log(`I am from patchController: ${e}`)
-        next(e)
-    }
-  
-
-}
-
-exports.deleteTour = async (req,res,next)=>{
-    try{
-        const deletedData = await Tour.findByIdAndRemove(req.params.id,req.bady, {new:true})
-        res.status(204).json({
-            message:"I am from deleteController",
-            status:"sucess",
-            data:{
-                deletedData
-            }
-        })
-
-    }catch(e){
-        console.log(`I am from deleteController: ${e}`)
-    }
-}
+// TO UNDERSTAND NORMAL COADING VS CLASS COADING
+// ITS NORMAL COADING
