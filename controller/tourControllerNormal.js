@@ -1,71 +1,52 @@
 const { findByIdAndRemove } = require('../model/tourMoel')
 const Tour = require('../model/tourMoel')
 
-class APIFeatures{
-    constructor(query, queryString){
-        this.query = query
-        this.queryString = queryString
-    };
-    filter(){
-   // Filtering {query string}
-   let queryObj = { ...this.queryString }
-   const excludeFildes = ['page','sort','limit','fildes']
-   excludeFildes.forEach(e => delete queryObj[e])
-
-   // 1.1 Advance filtering
-   let queryStr = JSON.stringify(queryObj)
-   queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
-   // gte = greater than or equal && lte = less than or equal 
-   
-   this.query.find(JSON.parse(queryStr))
-
-   // returning value
-   return this;
-    };
-
-    sort(){
-           // 2. Sorthing DATA
-        if (this.queryString.sort){
-            const sortBy = this.queryString.sort.split(',').join(' ')
-            this.query = this.query.sort(sortBy)
-        }else{
-            this.query = this.query.sort('-createdAt')
-        }
-    return this;
-    };
-
-    limitFields(){
-            //  field DATA
-    if(this.queryString.fields){
-        console.log(this.queryString.fields)
-      const fields = this.queryString.fields.split(',').join(' ')  
-      this.query = this.query.select(fields)
-    } else{
-     this.query = this.query.select('-__v')   
-    }
-    return this;
-    }
-
-    paginate(){
-           // Pagination {IMPORTANT}
-    const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 100;
-    const skip = (page -1) * limit;
-    this.query = this.query.skip(skip).limit(limit)
-    // Pagination (if DATA and VALUE are equals then refuse to empty DATA page)
-    // if(this.queryString.page){
-    //     const numTours = await Tour.countDocuments()
-    //     if(skip >= numTours) throw new Error('This page does not exist')
-    // }
-        return this;
-    }
-
-}
-
 exports.getTourController =async (req,res,next)=>{
-    // EXECUTE QUERY
-    const features = new APIFeatures(Tour.find(),req.query).filter().sort().limitFields().paginate()
-    const tours = await features.query
+    // 1. FINDING QUERY STRING(filtering) FROM DB
+    console.log(req.query)
+    // Filtering {query string}
+    let queryObj = { ...req.query }
+    const excludeFildes = ['page','sort','limit','fildes']
+    excludeFildes.forEach(e => delete queryObj[e])
+
+    // 1.1 Advance filtering
+    let queryStr = JSON.stringify(queryObj)
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
+    // gte = greater than or equal && lte = less than or equal 
+    let query = Tour.find(JSON.parse(queryStr))
+
+    // 2. Sorthing DATA
+    if (req.query.sort){
+        const sortBy = req.query.sort.split(',').join(' ')
+        query = query.sort(sortBy)
+    }else{
+        query = query.sort('-createdAt')
+    }
+
+    //  field DATA
+    if(req.query.fields){
+        console.log(req.query.fields)
+      const fields = req.query.fields.split(',').join(' ')  
+      query = query.select(fields)
+    } else{
+     query = query.select('-__v')   
+    }
+
+    // Pagination {IMPORTANT}
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    const skip = (page -1) * limit;
+    query = query.skip(skip).limit(limit)
+    // Pagination (if DATA and VALUE are equals then refuse to empty DATA page)
+    if(req.query.page){
+        const numTours = await Tour.countDocuments()
+        if(skip >= numTours) throw new Error('This page does not exist')
+    }
+
+
+
+
+    const tours = await query
     // const tours = await Tour.find(req.query)
 
 
