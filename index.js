@@ -6,6 +6,7 @@ const dotenv = require('dotenv')
 dotenv.config({path:'./config.env'})
 
 const tourRoutes = require('./router/tourRoutes')
+const aggregateRoutes = require('./router/aggregationRoutes')
 
 const app = express()
 app.use(express.json())
@@ -25,6 +26,7 @@ app.use(express.json())
 // })
 
 app.use('/api/v1/tours',tourRoutes)
+app.use('/api/tour-stats',aggregateRoutes)
 
 app.get('/',(req,res)=>{
     res.send('HELLO WORLD!!!!!!')

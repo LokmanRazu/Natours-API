@@ -148,3 +148,5 @@ exports.deleteTour = async (req,res,next)=>{
         console.log(`I am from deleteController: ${e}`)
     }
 }
+
+
