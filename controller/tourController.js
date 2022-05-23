@@ -135,7 +135,7 @@ exports.patchController = async (req,res,next)=>{
 
 exports.deleteTour = async (req,res,next)=>{
     try{
-        const deletedData = await Tour.findByIdAndRemove(req.params.id,req.bady, {new:true})
+        const deletedData = await Tour.findByIdAndDelete(req.params.id,req.bady, {new:true})
         res.status(204).json({
             message:"I am from deleteController",
             status:"sucess",

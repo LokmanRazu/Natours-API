@@ -8,7 +8,8 @@ exports.getTourStats = async (req, res) => {
 
       {
         $group: {                  // GROUPING DATA
-          _id: "$since",
+          _id: null,
+          avgYear:{ $avg: '$since'},
           data: { $push: "$$ROOT" }, // SHOW DATA from ROOT
         },
       },
