@@ -10,7 +10,7 @@ class APIFeatures{
     };
     filter(){
    // Filtering {query string}
-   let queryObj = { ...this.queryString }
+   let queryObj = { ...this.queryString }           // Query.param(COPY)
    const excludeFildes = ['page','sort','limit','fildes']
    excludeFildes.forEach(e => delete queryObj[e])
 
@@ -27,7 +27,7 @@ class APIFeatures{
 
     sort(){
            // 2. Sorthing DATA
-        if (this.queryString.sort){
+        if (this.queryString.sort){                     // Main Query
             const sortBy = this.queryString.sort.split(',').join(' ')
             this.query = this.query.sort(sortBy)
         }else{
