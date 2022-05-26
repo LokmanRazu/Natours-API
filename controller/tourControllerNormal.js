@@ -4,7 +4,7 @@ exports.getTourController =async (req,res,next)=>{
     // 1. FINDING QUERY STRING(filtering) FROM DB
     console.log(req.query)
     // Filtering {query string}
-    let queryObj = { ...req.query }
+    let queryObj = { ...req.query }        // Query.params
     const excludeFildes = ['page','sort','limit','fildes']
     excludeFildes.forEach(e => delete queryObj[e])
 
@@ -13,9 +13,10 @@ exports.getTourController =async (req,res,next)=>{
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
     // gte = greater than or equal && lte = less than or equal 
     let query = Tour.find(JSON.parse(queryStr))
+    console.log(query)
 
     // 2. Sorthing DATA
-    if (req.query.sort){
+    if (req.query.sort){            // Main Query
         const sortBy = req.query.sort.split(',').join(' ')
         query = query.sort(sortBy)
     }else{
@@ -23,10 +24,10 @@ exports.getTourController =async (req,res,next)=>{
     }
 
     //  field DATA
-    if(req.query.fields){
+    if(req.query.fields){         //  Main Query
         console.log(req.query.fields)
       const fields = req.query.fields.split(',').join(' ')  
-      query = query.select(fields)
+      query = query.select(fields)    // Query.Params
     } else{
      query = query.select('-__v')   
     }
