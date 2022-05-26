@@ -103,7 +103,7 @@ exports.tourDataController =async (req,res,next)=>{
         const saveTour = await testTour.save().then(doc=>{console.log(doc)})
            return res.status(200).json({
             message:'Successfully Data save',
-            data:{
+            data:{ 
                 saveTour:saveTour
             }
         })

@@ -54,8 +54,8 @@ exports.getTourController =async (req,res,next)=>{
     // })
 
     // FINDING QUERY STRING(filtering) FROM DB {another way}
-    // const tours = await Tour.find()
-    //     .where('rating').equals(4.7)
+    // const tours = await Tour.find()                      HARD CODE " QUERY "
+    //     .where('rating').equals(4.7).whare('since').equels(1995)
 
     res.status(200).json({
         message:'Hello! I am from getTourcontroller',
