@@ -3,7 +3,7 @@ const Tour = require('../model/tourMoel')
 exports.getTourController =async (req,res,next)=>{
     // 1. FINDING QUERY STRING(filtering) FROM DB
     console.log(req.query)
-    // Filtering {query string}
+    // 1. Filtering {query string}
     let queryObj = { ...req.query }        // Query.params
     const excludeFildes = ['page','sort','limit','fildes']
     excludeFildes.forEach(e => delete queryObj[e])
