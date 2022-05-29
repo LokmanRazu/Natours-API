@@ -36,6 +36,14 @@ app.use((error,req,res,next)=>{
     console.log(error)
 })
 
+// All Routes and API Error Handling
+app.all('*',(req,res,next)=>{
+    res.status(404).json({
+        status:'fail',
+        message:`Can't find ${req.originalUrl} on this server`
+    })
+})
+
 const db = process.env.DATABASE.replace('<password>',process.env.db_password)
 mongoose.connect(db,{
     useNewUrlParser:true              
