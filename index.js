@@ -27,7 +27,7 @@ app.all('*',(req,res,next)=>{
         status:'fail',
         message:`Can't find ${req.originalUrl} on this server`
     })
-})
+});
 
 // ERROR HANDLING Middleware
 app.use((err,req,res,next)=>{
