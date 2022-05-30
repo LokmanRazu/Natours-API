@@ -10,7 +10,7 @@ const aggregateRoutes = require('./router/aggregationRoutes')
 
 const appError = require('./utils/error')
 
-const app = express()
+const app = express();
 app.use(express.json())
 
 
@@ -48,7 +48,7 @@ mongoose.connect(db,{
 })
 .then(con =>{
     console.log('DB Connection successfull')
-})
+});
 
 
 
