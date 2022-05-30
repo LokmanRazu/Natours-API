@@ -8,32 +8,17 @@ dotenv.config({path:'./config.env'})
 const tourRoutes = require('./router/tourRoutes')
 const aggregateRoutes = require('./router/aggregationRoutes')
 
+const appError = require('./utils/error')
+
 const app = express()
 app.use(express.json())
 
-
-
-// const tours =  JSON.parse(fs.readFileSync('./txt/node-farm.json'))
-
-// app.get('/api/v1/tours', (req,res)=>{
-//     res.status(200).json({
-//         status:'active',
-//         results:tours.length,
-//         data:{
-//             tours:tours
-//         }
-//     })
-// })
 
 app.use('/api/v1/tours',tourRoutes)
 app.use('/api/tour-stats',aggregateRoutes)
 
 app.get('/',(req,res)=>{
     res.send('HELLO WORLD!!!!!!')
-})
-
-app.use((error,req,res,next)=>{
-    console.log(error)
 })
 
 // All Routes and API Error Handling
@@ -43,6 +28,19 @@ app.all('*',(req,res,next)=>{
         message:`Can't find ${req.originalUrl} on this server`
     })
 })
+
+// ERROR HANDLING Middleware
+app.use((err,req,res,next)=>{
+    err.statusCode = err.statusCode || 500;
+    err.status = err.status || 'error';
+
+    res.status(err.statusCode).json({
+        status:err.status,
+        message:err.message
+    })
+})
+
+
 
 const db = process.env.DATABASE.replace('<password>',process.env.db_password)
 mongoose.connect(db,{
