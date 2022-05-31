@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -31,8 +32,18 @@ const userSchema = new mongoose.Schema({
                 // This only work on CREATE and SAVE
                 return el === this.password
             }
-        },
+        }
     }
+})
+
+// Password HASHED using BCRYPT
+userSchema.pre('save',function(next){
+    if(!this.isModified('password'))  // if not changed the Password
+    return next()
+
+    this.password = await bcrypt.hash(this.password,12)
+    this.passwordConfirm = undefined;
+
 })
 
 const User = mongoose.model('User',userSchema)
