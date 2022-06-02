@@ -37,13 +37,15 @@ const userSchema = new mongoose.Schema({
 })
 
 // Password HASHED using BCRYPT
-userSchema.pre('save',function(next){
+userSchema.pre('save',async function(next){
+    // only run when password are modified
     if(!this.isModified('password'))  // if not changed the Password
     return next()
-
     this.password = await bcrypt.hash(this.password,12)
-    this.passwordConfirm = undefined;
 
+    // Delete PasswordConfirm field
+    this.passwordConfirm = undefined;
+    next()
 })
 
 const User = mongoose.model('User',userSchema);

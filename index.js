@@ -58,5 +58,5 @@ mongoose.connect(db,{
 
 const PORT = 3000;
 app.listen(PORT,()=>{
-    console.log(`app is running in ${PORT}`)
+    console.log(`app is running in ${PORT}`);
 })
