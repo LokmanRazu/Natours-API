@@ -28,20 +28,28 @@ exports.signup = async (req, res, next)=>{
 };
 
 exports.login = async (req,res,next)=>{
+  let token =''
   const { email, password } = req.body
   if(!email || !password){
     return next(new appError('Incorrect email or password', 401))
   };
   try{
-    const theUser = await User.findOne({ email })
-    const matchPass = await bcrypt.compare(password, User.password)
-    if(!theUser || !matchPass){
-      return next(appError('email or pass not match',404))
+    let user = await User.findOne({ email }).select('password')
+    if(!user){
+      return next(new appError('invalid email',401))
     }
-    res.status(200).json({
-      status:'sucess',
-      data:'Login Sucessfully'
-    })
+    let match =await bcrypt.compare(password, user.password)
+    if(!match){
+        return res.json({
+            message:'Invalid Credential'
+        })
+      }
+      res.status(200).json({
+        status:'sucess',
+        data:{
+          token
+        }
+      })
   }catch(e){
     console.log(`I am from login-controller : ${e}`)
     next(e)

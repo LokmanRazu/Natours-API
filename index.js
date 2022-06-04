@@ -8,6 +8,7 @@ dotenv.config({path:'./config.env'})
 const tourRoutes = require('./router/tourRoutes')
 const aggregateRoutes = require('./router/aggregationRoutes')
 const userRoutes = require('./router/userRoutes')
+const loginRoutes  = require('./router/login')
 
 const appError = require('./utils/error')
 
@@ -18,7 +19,7 @@ app.use(express.json())
 app.use('/api/v1/tours',tourRoutes)
 app.use('/api/tour-stats',aggregateRoutes)
 app.use('/signup',userRoutes)
-app.use('/login',userRoutes)
+app.use('/login',loginRoutes)
 
 app.get('/',(req,res)=>{
     res.send('HELLO WORLD!!!!!!')
