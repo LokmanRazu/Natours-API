@@ -1,6 +1,7 @@
 const User = require('./../model/userModel')
 const jwt = require('jsonwebtoken');
 const appError = require('../utils/error');
+const bcrypt = require('bcrypt')
 
 exports.signup = async (req, res, next)=>{
   let {name,email,password,passwordConfirm} = req.body
@@ -26,13 +27,21 @@ exports.signup = async (req, res, next)=>{
   }
 };
 
-exports.login = (req,res,next)=>{
+exports.login = async (req,res,next)=>{
   const { email, password } = req.body
   if(!email || !password){
     return next(new appError('Incorrect email or password', 401))
   };
   try{
-
+    const theUser = await User.findOne({ email })
+    const matchPass = await bcrypt.compare(password, User.password)
+    if(!theUser || !matchPass){
+      return next(appError('email or pass not match',404))
+    }
+    res.status(200).json({
+      status:'sucess',
+      data:'Login Sucessfully'
+    })
   }catch(e){
     console.log(`I am from login-controller : ${e}`)
     next(e)
