@@ -45,7 +45,7 @@ userSchema.pre('save',async function(next){
 
     // Delete PasswordConfirm field
     this.passwordConfirm = undefined;
-    next()
+    next();
 })
 
 const User = mongoose.model('User',userSchema);

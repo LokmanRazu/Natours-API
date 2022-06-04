@@ -18,6 +18,7 @@ app.use(express.json())
 app.use('/api/v1/tours',tourRoutes)
 app.use('/api/tour-stats',aggregateRoutes)
 app.use('/signup',userRoutes)
+app.use('/login',userRoutes)
 
 app.get('/',(req,res)=>{
     res.send('HELLO WORLD!!!!!!')
