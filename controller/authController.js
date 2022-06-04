@@ -1,5 +1,6 @@
 const User = require('./../model/userModel')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const appError = require('../utils/error');
 
 exports.signup = async (req, res, next)=>{
   let {name,email,password,passwordConfirm} = req.body
@@ -23,4 +24,17 @@ exports.signup = async (req, res, next)=>{
              console.log(`I am from signup Controller: ${e}`);
         next(e)
   }
-}
+};
+
+exports.login = (req,res,next)=>{
+  const { email, password } = req.body
+  if(!email || !password){
+    return next(new appError('Incorrect email or password', 401))
+  };
+  try{
+
+  }catch(e){
+    console.log(`I am from login-controller : ${e}`)
+    next(e)
+  }
+} 
