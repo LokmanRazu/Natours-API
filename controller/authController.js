@@ -11,13 +11,16 @@ exports.signup = async (req, res, next)=>{
         await user.save()
         res.status(201).json({
           status:"success",
+          jwtToken:{
+            token
+          },
           data:{
             user
           }
         })
  
     }catch(e){
-             console.log(`I am from signup Controller: ${e}`)
+             console.log(`I am from signup Controller: ${e}`);
         next(e)
   }
 }
