@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true, 'A tour must have a name'], //defule message
         trim:true,
-        minlength:10,
+        minlength:5,
         maxlength:20
     },
     slug:String,
