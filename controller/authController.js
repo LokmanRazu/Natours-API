@@ -51,7 +51,7 @@ exports.login = async (req,res,next)=>{
         }
       })
   }catch(e){
-    console.log(`I am from login-controller : ${e}`)
+    console.log(`I am from login-controller : ${e}`);
     next(e)
   }
 } 
