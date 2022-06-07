@@ -20,6 +20,6 @@ try{
     
 }catch(e){
     console.log(`I am from Protech Middleware: ${e}`);
-        next(e)
+        next(e);
 }
 }
