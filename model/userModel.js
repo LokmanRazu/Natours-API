@@ -33,8 +33,9 @@ const userSchema = new mongoose.Schema({
                 return el === this.password
             }
         }
-    }
-})
+    },
+    passwordChangedAt:Date
+});
 
 // Password HASHED using BCRYPT
 userSchema.pre('save',async function(next){
@@ -46,7 +47,18 @@ userSchema.pre('save',async function(next){
     // Delete PasswordConfirm field
     this.passwordConfirm = undefined;
     next();
-})
+});
+
+// Check is user changed password after the token was issued (main Method)
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp){
+    if(this.passwordChangedAt){
+        const changedTimestamp = parseInt(this.passwordChangedAt.getTime()/1000, 10);
+        return JWTTimestamp<changedTimestamp;
+    };
+
+    // false means not changed password
+    return false;
+};
 
 const User = mongoose.model('User',userSchema);
 module.exports = User;

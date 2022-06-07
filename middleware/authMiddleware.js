@@ -21,7 +21,14 @@ try{
         const freshUser = await User.findById(decode.id);
         if(!freshUser){
             return next(new appError('User does not exist,login again',401));
+        };
+
+        // Check is user changed password after the token was issued
+        if(freshUser.changedPasswordAfter(decode.iat)){
+            return next(new appError('User recently changed password, please login again',401));
         }
+
+
         next();
         // res.status(200).json({
         //     status:'sucess',
