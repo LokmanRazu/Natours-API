@@ -14,10 +14,7 @@ const appError = require('./utils/error')
 
 const app = express();
 app.use(express.json())
-app.use((req,res,next)=>{
-    console.log(req.headers)
-    next()
-})
+
 
 
 app.use('/api/v1/tours',tourRoutes)

@@ -9,7 +9,7 @@ try{
         }
         console.log(`I am token:- ${token}`)
         if(!token){
-            return next(new appError('you are not logged in!',401))
+            return next(new appError('you are not logged in!',401));
         }
         res.status(200).json({
             status:'sucess',
