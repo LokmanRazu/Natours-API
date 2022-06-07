@@ -28,14 +28,8 @@ try{
             return next(new appError('User recently changed password, please login again',401));
         }
 
-
+        req.user  = freshUser;
         next();
-        // res.status(200).json({
-        //     status:'sucess',
-        //     data:{
-        //         token
-        //     }
-        // })
     
 }catch(e){
     console.log(`I am from Protect Middleware: ${e}`);
