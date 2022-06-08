@@ -4,10 +4,10 @@ const appError = require('../utils/error');
 const bcrypt = require('bcrypt')
 
 exports.signup = async (req, res, next)=>{
-  let {name,email,password,passwordConfirm} = req.body
+  let {name,email,password,passwordConfirm,role} = req.body
     try{  
         let user = new User({
-          name,email,password,passwordConfirm
+          name,email,password,passwordConfirm,role
         })
         await user.save()
         res.status(201).json({

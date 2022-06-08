@@ -16,6 +16,7 @@ try{
 
         // Verify the Token
         const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        console.log(decode)
 
         // Check if user still exist
         const freshUser = await User.findById(decode.id);
@@ -35,4 +36,16 @@ try{
     console.log(`I am from Protect Middleware: ${e}`);
         next(e);
 }
+};
+
+
+exports.restrictTo = (...roles)=>{
+    // ...role = ['admin', 'guide']
+    return (req,res,next)=>{
+        if(!roles.includes(req.user.role)){
+            return next(new appError('You do not have permissionm to this action',403));
+        }
+        next();
+
+    }
 }
