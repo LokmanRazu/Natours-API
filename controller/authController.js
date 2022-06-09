@@ -31,7 +31,7 @@ exports.login = async (req,res,next)=>{
   };
   try{
     // Does user { email,password } exist in DB
-    let user = await User.findOne({ email }).select('password')
+    let user = await User.findOne({ email }).select('password');
     if(!user){
       return next(new appError('invalid email',401))
     }

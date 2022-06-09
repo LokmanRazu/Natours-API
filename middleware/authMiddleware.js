@@ -39,6 +39,7 @@ try{
 };
 
 
+// For Role Managment
 exports.restrictTo = (...roles)=>{
     // ...role = ['admin', 'guide']
     return (req,res,next)=>{
@@ -47,5 +48,5 @@ exports.restrictTo = (...roles)=>{
         }
         next();
 
-    }
+    };
 };

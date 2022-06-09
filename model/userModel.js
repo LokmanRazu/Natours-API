@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save',async function(next){
     // only run when password are modified
     if(!this.isModified('password'))  // if not changed the Password
-    return next()
+    return next();
     this.password = await bcrypt.hash(this.password,12)
 
     // Delete PasswordConfirm field
