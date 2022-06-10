@@ -33,7 +33,7 @@ exports.login = async (req,res,next)=>{
     // Does user { email,password } exist in DB
     let user = await User.findOne({ email }).select('password');
     if(!user){
-      return next(new appError('invalid email',401))
+      return next(new appError('invalid email',401));
     }
     // Match the password
     let match =await bcrypt.compare(password, user.password)

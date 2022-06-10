@@ -47,7 +47,7 @@ userSchema.pre('save',async function(next){
     // only run when password are modified
     if(!this.isModified('password'))  // if not changed the Password
     return next();
-    this.password = await bcrypt.hash(this.password,12)
+    this.password = await bcrypt.hash(this.password,12);
 
     // Delete PasswordConfirm field
     this.passwordConfirm = undefined;
