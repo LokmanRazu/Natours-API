@@ -58,6 +58,6 @@ exports.forgotPassword = async (req,res,next)=>{
 
     }catch(e){
         console.log(`I am from forgot password middleware${e}`);
-        next(e)
+        next(e);
     }
 }
