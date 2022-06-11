@@ -50,3 +50,14 @@ exports.restrictTo = (...roles)=>{
 
     };
 };
+
+
+// Forgot Password middleware
+exports.forgotPassword = async (req,res,next)=>{
+    try{
+
+    }catch(e){
+        console.log(`I am from forgot password middleware${e}`);
+        next(e)
+    }
+}
