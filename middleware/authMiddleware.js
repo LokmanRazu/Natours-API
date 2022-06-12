@@ -65,13 +65,13 @@ exports.forgotPassword = async (req,res,next)=>{
          const resetToken = user.CreatePasswordResetToken()
          await user.save({ validateBeforeSave:false })
 
-         // 3.Send it to user Email
+        //  3.Send it to user Email
          const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
          const message = `forgot Your Password? submit a patch request with your new pasword: ${resetURL}.
-         \nIf you did not forget your password,Please Ignore thios email`;
+         If you did not forget your password,Please Ignore thios email`;
 
          try{
-            await sendMail ({ email:user.email, subject:'Your password reset Token',message });
+            await sendMail ({ email:user.email, subject:'Your password reset Token', message });
             res.status(200).json({
                status:'success',
                message:'Token sent to email'
