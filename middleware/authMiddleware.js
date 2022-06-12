@@ -55,6 +55,14 @@ exports.restrictTo = (...roles)=>{
 // Forgot Password middleware
 exports.forgotPassword = async (req,res,next)=>{
     try{
+        // get user based on POSTed Email
+        const user = await User.findOne({ email:req.body.email })
+        if(!user){
+            return next(new appError('There is no user with Email Address',404));
+        };
+         // Generate the random reset token
+         const resetToken = user.CreatePasswordResetToken()
+         await user.save({ validateBeforeSave:false })
 
     }catch(e){
         console.log(`I am from forgot password middleware${e}`);

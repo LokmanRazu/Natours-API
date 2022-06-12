@@ -21,6 +21,7 @@ app.use('/api/v1/tours',tourRoutes)
 app.use('/api/tour-stats',aggregateRoutes)
 app.use('/signup',userRoutes)
 app.use('/login',loginRoutes)
+app.use('/forgotPassword',loginRoutes)
 
 app.get('/',(req,res)=>{
     res.send('HELLO WORLD!!!!!!')
