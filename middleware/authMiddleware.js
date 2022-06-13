@@ -3,6 +3,8 @@ const User = require('../model/userModel')
 const { promisify } = require('util')
 const jwt = require('jsonwebtoken');
 const sendMail = require('../utils/email');
+const crypto = require('crypto')
+
 
 exports.protect = async (req,res,next)=>{
 try{
@@ -48,7 +50,6 @@ exports.restrictTo = (...roles)=>{
             return next(new appError('You do not have permissionm to this action',403));
         }
         next();
-
     };
 };
 
@@ -82,13 +83,19 @@ exports.forgotPassword = async (req,res,next)=>{
             await user.save({validateBeforeSave:false})
             return next(e);
          }
-
-
-         
-
     }catch(e){
         console.log(`I am from forgot password middleware${e}`);
+        next(e);
+    }
+}
 
+
+// Reset password
+exports.resetPassword =async (req,res,next)=>{
+    try{
+
+    }catch(e){
+        console.log(`I am from Reset Pasword Middleware ${e}`)
         next(e);
     }
 }
