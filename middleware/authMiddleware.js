@@ -78,9 +78,9 @@ exports.forgotPassword = async (req,res,next)=>{
                message:'Token sent to email'
             })
          }catch(e){
-            user.PasswordResetToken = undefined
-            user.passwordResetExpires = undefined
-            await user.save({validateBeforeSave:false})
+            // user.PasswordResetToken = undefined
+            // user.passwordResetExpires = undefined
+            // await user.save({validateBeforeSave:false})
             return next(e);
          }
     }catch(e){
@@ -95,23 +95,24 @@ exports.resetPassword =async (req,res,next)=>{
     try{
     // 1.Get user based on Token
     const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
+    console.log('hashedToken: ',hashedToken)
     const user = await User.findOne({PasswordResetToken:hashedToken,passwordResetExpires:{ $gt: Date.now() }});
     console.log('user :',user)
 
     // 2.If token has not expired, and there is user,set the new password
     if(!user){
-        return next(new appError('Token is invalid or has expired',400));
+        return next(new appError('Token is invalid or has expired',400))
     }
     user.password = req.body.password;
     user.passwordConfirm = req.body.passwordConfirm;
-    user.PasswordResetToken = undefined;
+    user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     const newUser = await user.save();
     console.log('newuser :',newUser)
     // 3. Update ChangedPasswordAt property for the user
 
     // 4. Log the user in, sent JWT
-    const token = signToken(user._id)
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET ,{ expiresIn:process.env.JWT_EXPIRES_IN });
     console.log('token: ',token)
     res.status(200).json({
         status:'sucsess',
