@@ -125,4 +125,10 @@ exports.resetPassword =async (req,res,next)=>{
         console.log(`I am from Reset Pasword Middleware ${e}`)
         next(e);
     }
+};
+
+
+// Update password
+exports.updatePassword = (req,res,next)=>{
+
 }

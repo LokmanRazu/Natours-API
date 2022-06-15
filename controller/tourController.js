@@ -1,4 +1,3 @@
-const { findByIdAndRemove } = require('../model/tourMoel')
 const Tour = require('../model/tourMoel')
 
 
