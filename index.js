@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv')
 dotenv.config({path:'./config.env'});
 
-const tourRoutes = require('./router/tourRoutes')
+const tourRoutes = require('./router/tourRoutes');
 const aggregateRoutes = require('./router/aggregationRoutes')
 const userRoutes = require('./router/userRoutes')
 const loginRoutes  = require('./router/login')
