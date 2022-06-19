@@ -28,7 +28,27 @@ const tourSchema = new mongoose.Schema({
     headquarter:{
         type:String,
         required:true
-    }
+    },
+    startLocation:{
+        // GeoJSON
+        type:String,
+        default:'point',
+        enum:['point']
+    },
+    location:[
+        {
+            type:{
+                type:String,
+                default:'point',
+                enum:['point']
+            },
+            coordinates:[Number],
+            address:String,
+            description:String,
+            day:Number
+        }
+    ]
+ 
 },{
     toJSON: { virtuals:true }, toObject: { virtuals:true }      // For Virtuals Properties
 })

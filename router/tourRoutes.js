@@ -3,7 +3,7 @@ const { getTourController, tourDataController , patchController , deleteTour, } 
 const { protect,restrictTo } = require('../middleware/authMiddleware')
 
 router.get('/',protect, getTourController);
-router.post('/',tourDataController)
+router.post('/post',tourDataController)
 router.patch('/:id',protect,restrictTo('admin'),patchController);
 router.delete('/:id' ,deleteTour)
 

@@ -89,7 +89,7 @@ exports.getTourController =async (req,res,next)=>{
 }
 
 exports.tourDataController =async (req,res,next)=>{
-    const { name,ceo,owner,netWorth,since,headquarter } = req.body
+    const { name,ceo,owner,netWorth,since,headquarter,startLocation,location } = req.body
     try{
         const testTour = new Tour({
          name,
@@ -97,7 +97,9 @@ exports.tourDataController =async (req,res,next)=>{
          owner,
          netWorth,
          since,
-         headquarter
+         headquarter,
+         startLocation,
+         location
         })
         const saveTour = await testTour.save().then(doc=>{console.log(doc)})
            return res.status(200).json({
