@@ -49,7 +49,12 @@ const tourSchema = new mongoose.Schema({
             day:Number
         }
     ],
-    guides: Array
+    guides: [
+        {
+          type:mongoose.Schema.ObjectId ,
+          ref:'User' 
+        }
+    ]
  
 },{
     toJSON: { virtuals:true }, toObject: { virtuals:true }      // For Virtuals Properties
@@ -64,10 +69,10 @@ tourSchema.virtual('sinceWeeks').get( function(){
 
 // Mongoose Document Middleware: only exicute before .save() and .create()
 // Slugify for unique any properties
-tourSchema.pre('save', function(next){
-this.slug = slugify(this.name, { lower:true })
-next()
-});
+// tourSchema.pre('save', function(next){
+// this.slug = slugify(this.name, { lower:true })
+// next()
+// });
 
 // Guides  manegment
 tourSchema.pre('save', async function(next){
