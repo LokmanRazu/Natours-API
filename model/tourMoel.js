@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { default: slugify } = require('slugify')
 const slug = require('slugify')
+const User = require('./userModel')
 
 
 const tourSchema = new mongoose.Schema({
@@ -44,10 +45,11 @@ const tourSchema = new mongoose.Schema({
             },
             coordinates:[Number],
             address:String,
-            description:String,
+            description:String, 
             day:Number
         }
-    ]
+    ],
+    guides: Array
  
 },{
     toJSON: { virtuals:true }, toObject: { virtuals:true }      // For Virtuals Properties
@@ -65,6 +67,13 @@ tourSchema.virtual('sinceWeeks').get( function(){
 tourSchema.pre('save', function(next){
 this.slug = slugify(this.name, { lower:true })
 next()
+});
+
+// Guides  manegment
+tourSchema.pre('save', async function(next){
+    const guidesPromises = this.guides.map(async id =>await User.findById(id));
+    this.guides = await Promise.all(guidesPromises)
+    next()
 })
 
 const Tour = mongoose.model('Tour',tourSchema)

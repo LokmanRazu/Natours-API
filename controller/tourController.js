@@ -109,7 +109,7 @@ exports.tourDataController =async (req,res,next)=>{
             }
         })
     }catch(e){
-        console.log(`I am from tourController:- ${e}`)
+        console.log(`I am from tourDataController:- ${e}`)
             next()
     }
 

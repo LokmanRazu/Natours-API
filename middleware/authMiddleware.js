@@ -126,9 +126,3 @@ exports.resetPassword =async (req,res,next)=>{
         next(e);
     }
 };
-
-
-// Update password
-exports.updatePassword = (req,res,next)=>{
-
-}
