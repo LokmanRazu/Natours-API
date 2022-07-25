@@ -21,10 +21,12 @@ app.use(express.json())
 app.use('/api/v1/tours',tourRoutes)
 app.use('/api/tour-stats',aggregateRoutes)
 app.use('/signup',userRoutes)
+app.use('/user',userRoutes)
 app.use('/login',loginRoutes)
 app.use('/forgotPassword',loginRoutes)
 app.use('/resetPassword',loginRoutes)
 app.use('/api/v1/review',reviewRoutes)
+app.use('/api/v1/review',tourRoutes)
 
 app.get('/',(req,res)=>{
     res.send('HELLO WORLD!!!!!!')

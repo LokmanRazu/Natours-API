@@ -19,6 +19,9 @@ exports.getAllReview = async (req,res,next)=>{
 
 exports.createReview = async (req,res,next)=>{
     try{
+        // Allow Nasted Routes
+        if(!req.body.tour) req.bady.tour = req.params.tourId ;
+        if(!req.body.user) req.bady.user = req.user.id;
         const newRevirew = await Review.create(req.body)
         res.status(201).json({
             status:'success',

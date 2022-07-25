@@ -3,6 +3,22 @@ const jwt = require('jsonwebtoken');
 const appError = require('../utils/error');
 const bcrypt = require('bcrypt')
 
+exports.users = async (req,res,next)=>{
+  try{
+    let user =await User.find()
+    res.status(200).json({
+      status:'Success',
+      data:{
+        user
+      }
+    })
+  }catch(e){
+    next(e);
+  }
+
+
+}
+
 exports.signup = async (req, res, next)=>{
   let {name,email,password,passwordConfirm,role} = req.body
     try{  
