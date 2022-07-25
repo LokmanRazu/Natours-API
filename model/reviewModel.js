@@ -31,7 +31,7 @@ const reviewSchema = new mongoose.Schema({
 // Populate Data to the user
 reviewSchema.pre(/^find/, function(next){
     this.populate({
-        path:'tour',
+        path:'tour',  // This 'tour' from tourModel Data
         select:'name'
     }).populate({   // If wamt to POPULATE Multiple Data
         path:'user',

@@ -65,7 +65,14 @@ const tourSchema = new mongoose.Schema({
 // Virtual Properties
 tourSchema.virtual('sinceWeeks').get( function(){
     return this.since/7
-})
+});
+
+// Virtual Populate
+tourSchema.virtual('reviews',{
+    ref:'Review',
+    foreignField:'tour',
+    localField:'_id'
+});
 
 // Mongoose Document Middleware: only exicute before .save() and .create()
 // Slugify for unique any properties
