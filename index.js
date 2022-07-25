@@ -4,10 +4,12 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv')
 dotenv.config({path:'./config.env'});
 
+// Router
 const tourRoutes = require('./router/tourRoutes');
 const aggregateRoutes = require('./router/aggregationRoutes')
 const userRoutes = require('./router/userRoutes')
 const loginRoutes  = require('./router/login')
+const reviewRoutes = require('./router/reviewRoutes')
 
 const appError = require('./utils/error')
 
@@ -22,6 +24,7 @@ app.use('/signup',userRoutes)
 app.use('/login',loginRoutes)
 app.use('/forgotPassword',loginRoutes)
 app.use('/resetPassword',loginRoutes)
+app.use('/api/v1/review',reviewRoutes)
 
 app.get('/',(req,res)=>{
     res.send('HELLO WORLD!!!!!!')

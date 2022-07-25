@@ -13,7 +13,7 @@ const reviewSchema = new mongoose.Schema({
     tour:{
         type:mongoose.Schema.ObjectId,
         ref:'Tour',
-        required:[tour, 'Review must belomg to a tour']
+        required:[true, 'Review must belong to a tour']
     },
     user:{
         type:mongoose.Schema.ObjectId,
@@ -28,5 +28,17 @@ const reviewSchema = new mongoose.Schema({
 
 );
 
+// Populate Data to the user
+reviewSchema.pre(/^find/, function(next){
+    this.populate({
+        path:'tour',
+        select:'name'
+    }).populate({   // If wamt to POPULATE Multiple Data
+        path:'user',
+        select:'name photo'
+    });
+    next()
+})
+
 const Review = mongoose.model('Review', reviewSchema)
-module.exports = Review;
+module.exports = Review; 

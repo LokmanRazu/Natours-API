@@ -15,4 +15,22 @@ exports.getAllReview = async (req,res,next)=>{
         console.log(`I am from getAllReview Controller : ${e}`);
         next()
     }
+};
+
+exports.createReview = async (req,res,next)=>{
+    try{
+        const newRevirew = await Review.create(req.body)
+        res.status(201).json({
+            status:'success',
+            result: newRevirew.length,
+            data:{
+                newRevirew
+            }
+        })
+
+
+    }catch(e){
+        console.log(`I am from CreateRivew Controller : ${e}`);
+        next()
+    }
 }
