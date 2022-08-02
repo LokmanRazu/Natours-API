@@ -20,11 +20,13 @@ exports.users = async (req,res,next)=>{
 }
 
 exports.signup = async (req, res, next)=>{
-  let {name,email,password,passwordConfirm,role} = req.body
+  let {name,email,photo,password,passwordConfirm,role} = req.body
     try{  
         let user = new User({
-          name,email,password,passwordConfirm,role
+          name,email,photo,password,passwordConfirm,role
         })
+        if(req.file) photo = req.file.file
+
         await user.save()
         res.status(201).json({
           status:"success",
